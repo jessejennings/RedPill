@@ -1,0 +1,10 @@
+<h1>All Applications</h1>
+<% @applications.each do |wiki| %>
+ <div class="media">
+     <div class="media-body">
+       <h4 class="media-heading">
+         <%= link_to application.title, application %>
+       </h4>
+     </div>
+   </div>
+<% end %>
