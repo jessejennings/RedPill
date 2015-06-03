@@ -1,15 +1,15 @@
 class RegisteredApplicationsController < ApplicationController 
 
   def index
-    @applications = Application.all
+    @application = current_user.applications
   end
 
   def new
-    @application = Application.new
+    @application = RegisteredApplication.new
   end
 
   def create
-    @application = Application.new(application_params)
+    @application = current_user.applications.new(application_params)
     if @application.save
       redirect_to @application, notice: "New Application"
     else
@@ -19,15 +19,15 @@ class RegisteredApplicationsController < ApplicationController
   end
 
   def show
-    @application = Application.find(params[:id])
+    @application = RegisteredApplication.find(params[:id])
   end
 
   def edit
-    @application = Application.find(params[:id])
+    @application = RegisteredApplication.find(params[:id])
   end
 
   def update
-    @application = Application.find(params[:id])
+    @application = RegisteredApplication.find(params[:id])
 
     if @application.update_attributes(application_params)
       redirect_to @application
@@ -36,13 +36,12 @@ class RegisteredApplicationsController < ApplicationController
       render :edit
     end
   end
-
   def destroy
-    @application = Application.find(params[:id])
+    @application = RegisteredApplication.find(params[:id])
 
       if @application.destroy
         flash[:notice] = "Successfully deleted."
-        redirect_to application_path
+        redirect_to applications_path
       else
         flash[:notice] = "The was no error deleting the application."
         render :show
@@ -52,6 +51,6 @@ class RegisteredApplicationsController < ApplicationController
   private
 
   def application_params
-    params.require(:application).permit(:email)
+    params.require(:registered_application).permit(:email, :name, :description, :public)
   end
 end

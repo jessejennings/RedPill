@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :users, only: [:show, :update, :index]
 
-  resources :applications, only: [:show, :index]
+
+  resources :users, only: [:show] do
+    resources :registered_applications, only: [:new, :create]  
+  end 
 
 
 
