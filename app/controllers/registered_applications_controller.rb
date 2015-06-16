@@ -1,7 +1,7 @@
 class RegisteredApplicationsController < ApplicationController 
 
   def index
-    @application = current_user.applications
+    @applications = current_user.registered_applications
   end
 
   def new
@@ -9,7 +9,7 @@ class RegisteredApplicationsController < ApplicationController
   end
 
   def create
-    @application = current_user.applications.new(application_params)
+    @application = current_user.registered_applications.new(registered_application_params)
     if @application.save
       redirect_to @application, notice: "New Application"
     else
@@ -20,6 +20,7 @@ class RegisteredApplicationsController < ApplicationController
 
   def show
     @application = RegisteredApplication.find(params[:id])
+    @events = @application.events.group_by(&:name)
   end
 
   def edit
@@ -29,7 +30,7 @@ class RegisteredApplicationsController < ApplicationController
   def update
     @application = RegisteredApplication.find(params[:id])
 
-    if @application.update_attributes(application_params)
+    if @application.update_attributes(registered_application_params)
       redirect_to @application
     else
       flash[:error] = "Error saving application. Please try again."
@@ -39,18 +40,18 @@ class RegisteredApplicationsController < ApplicationController
   def destroy
     @application = RegisteredApplication.find(params[:id])
 
-      if @application.destroy
-        flash[:notice] = "Successfully deleted."
-        redirect_to applications_path
-      else
-        flash[:notice] = "The was no error deleting the application."
-        render :show
-      end
+    if @application.destroy
+      flash[:notice] = "Successfully deleted."
+      redirect_to applications_path
+    else
+      flash[:notice] = "The was no error deleting the application."
+      render :show
+    end
   end
 
   private
 
-  def application_params
+  def registered_application_params
     params.require(:registered_application).permit(:email, :name, :description, :public)
   end
 end

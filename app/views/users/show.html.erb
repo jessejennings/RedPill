@@ -2,5 +2,8 @@
   <h2 class="media-heading"><%= @user.email %></h2>
 </div>
 <div><%= link_to "Profile", user_path(current_user) %></div>
+<% @applications.each do |registered_application|%>
+<%= link_to registered_application.name, user_registered_application_path(current_user, registered_application) %>
+<% end %>
 
 

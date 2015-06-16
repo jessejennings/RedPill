@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @applications = @user.applications
+    @applications = @user.registered_applications
   end
 end
 

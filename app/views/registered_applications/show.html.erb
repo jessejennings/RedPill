@@ -1,4 +1,8 @@
-<h1><%= @application.title %></h1>
+<h1><%= @application.name %></h1>
+<br>
+<h3><%= @events.count %></h3>
+<br>
+<br>
 
- <div><%= link_to "Applications", user_application_path %></div>
-<div><%= link_to "Edit Application", edit_user_application_path(@application), class: "btn btn-success" %></div>
+ 
+<div><%= link_to "Edit Application", edit_user_registered_application_path(current_user, @application), class: "btn btn-success" %></div>

@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
 
   resources :users, only: [:show] do
-    resources :registered_applications, only: [:new, :create]  
+    resources :registered_applications, only: [:new, :create, :show, :edit] 
+  end
+  
+  namespace :api, defaults: { format: :json } do
+    resources :events, only: [:create]
   end 
 
 
